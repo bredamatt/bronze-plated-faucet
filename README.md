@@ -1,3 +1,3 @@
 # bronze-plated-faucet
 
-Used for BPF prototyping
+Used for BPF prototyping with Rust.
