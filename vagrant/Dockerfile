@@ -11,10 +11,20 @@ RUN chmod 0600 /home/vagrant/.ssh/authorized_keys
 RUN chmod 0700 /home/vagrant/.ssh
 
 RUN apt-get update \
-    && apt-get install -y openssh-server sudo wget curl puppet \
-    && apt-get clean
+    && apt-get install -y openssh-server sudo wget curl puppet build-essential \
+    software-properties-common \ 
+    lsb-release \
+    libelf-dev \ 
+    linux-headers-generic \ 
+    pkg-config \
+    && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 13 && rm -f ./llvm.sh \ 
+    && apt-get clean \
+    && curl https://sh.rustup.rs -sSf | sh
+    
+RUN llvm-config-13 --version | grep 13
 
 ADD sudoers.d/01_vagrant /etc/sudoers.d/
+
 RUN chmod 0400 /etc/sudoers.d/01_vagrant
 
 RUN mkdir /var/run/sshd

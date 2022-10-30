@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     docker.has_ssh = true
     # Make sure the container keeps running
     docker.remains_running = true
-    # Make sure it runs with -i -t
+    # Make sure it runs with -i -t (TTY)
     docker.create_args = ["-i", "-t"]
   end
 end
