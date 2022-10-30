@@ -22,7 +22,11 @@ RUN apt-get update \
 
 RUN llvm-config-13 --version | grep 13
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y 
+
+RUN cargo install cargo-bpf
+
+RUN cargo bpf --version
 
 ADD sudoers.d/01_vagrant /etc/sudoers.d/
 
