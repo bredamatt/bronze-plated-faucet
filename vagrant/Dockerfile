@@ -1,8 +1,8 @@
-FROM --platform=linux/x86_64 debian:latest
+FROM --platform=linux/x86_64 ubuntu:latest
 
 RUN useradd --create-home --shell /bin/bash vagrant
 RUN echo vagrant:vagrant | chpasswd
-RUN echo root:vagrat | chpasswd
+RUN echo root:vagrant | chpasswd
 
 ADD https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub \
     /home/vagrant/.ssh/authorized_keys
@@ -18,10 +18,11 @@ RUN apt-get update \
     linux-headers-generic \ 
     pkg-config \
     && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 13 && rm -f ./llvm.sh \ 
-    && apt-get clean \
-    && curl https://sh.rustup.rs -sSf | sh
-    
+    && apt-get clean 
+
 RUN llvm-config-13 --version | grep 13
+
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 ADD sudoers.d/01_vagrant /etc/sudoers.d/
 
