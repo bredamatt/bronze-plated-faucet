@@ -14,4 +14,4 @@ in your `Dockerfile` accordingly.
 
 ## SSH setup
 
-Some tutorials mention that it is recommended to setup your own private key for SSHing into the container, but in this case, Vagrant will automatically generate a private key for you whenever you use `vagrant ssh` in the `.vagrant/machines/default/docker/` directory. You can then `ssh` into the container with `vagrant ssh` accordingly.
+Some tutorials mention that it is recommended to setup your own private key for SSHing into the container, but in this case, Vagrant will automatically generate a private key for you whenever you use `vagrant ssh` in the `.vagrant/machines/default/docker/` directory. You can then `ssh` into the container with `vagrant ssh` accordingly. This is achieved by adding the `insecure public key` which will be overwritten whenever the machine is created.
