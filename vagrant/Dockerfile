@@ -22,7 +22,8 @@ RUN apt-get update \
 
 RUN llvm-config-13 --version | grep 13
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y 
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y \
+    && source $HOME/.cargo/env
 
 RUN cargo install cargo-bpf
 
