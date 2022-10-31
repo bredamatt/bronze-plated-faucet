@@ -1,7 +1,14 @@
 Vagrant.configure("2") do |config|
-  vm_name = "vagrant-docker"
+  vm_name = "linux-x86-ebpf"
   config.vm.hostname = vm_name
+
+  # Network configuration
+  config.vm.network :private_network, type: "dhcp", docker_network__internal: true
+
   config.vm.provider "docker" do |docker, override|
+    # Resources
+    docker.create_args = ['--cpuset-cpus=2']
+    docker.create_args = ['--memory=6g']
     # Docker doesnt use boxes
     override.vm.box = nil
     # Make sure the Dockerfile is in the same directory has the Vagrantfile
