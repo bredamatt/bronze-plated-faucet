@@ -1,4 +1,6 @@
-FROM --platform=linux/x86_64 ubuntu:latest
+FROM --platform=linux/x86_64 debian:latest
+
+SHELL ["/bin/bash", "-c"]
 
 RUN useradd --create-home --shell /bin/bash vagrant
 RUN echo vagrant:vagrant | chpasswd
@@ -12,6 +14,7 @@ RUN chmod 0700 /home/vagrant/.ssh
 
 RUN apt-get update \
     && apt-get install -y openssh-server sudo wget curl puppet build-essential \
+    git \
     software-properties-common \ 
     lsb-release \
     libelf-dev \ 
@@ -22,12 +25,11 @@ RUN apt-get update \
 
 RUN llvm-config-13 --version | grep 13
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y \
-    && source $HOME/.cargo/env
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 
-RUN cargo install cargo-bpf
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-RUN cargo bpf --version
+RUN cargo --config "net.git-fetch-with-cli=false"
 
 ADD sudoers.d/01_vagrant /etc/sudoers.d/
 
