@@ -1,4 +1,4 @@
-FROM --platform=linux/x86_64 debian:latest
+FROM --platform=linux/x86_64 ubuntu:latest
 
 SHELL ["/bin/bash", "-c"]
 
@@ -12,29 +12,28 @@ RUN chown -R vagrant:vagrant /home/vagrant/.ssh
 RUN chmod 0600 /home/vagrant/.ssh/authorized_keys
 RUN chmod 0700 /home/vagrant/.ssh
 
-RUN apt-get update \
-    && apt-get install -y openssh-server sudo wget curl puppet build-essential \
-    git \
-    software-properties-common \ 
-    lsb-release \
-    libelf-dev \ 
-    linux-headers-generic \ 
-    pkg-config \
-    && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 13 && rm -f ./llvm.sh \ 
-    && apt-get clean 
+WORKDIR /home/vagrant/
 
-RUN llvm-config-13 --version | grep 13
-
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-RUN cargo --config "net.git-fetch-with-cli=false"
+RUN apt-get update && apt-get install -y openssh-server linux-tools-common linux-tools-generic gcc wget vim
+RUN ln -fs /usr/lib/linux-tools/*/perf /usr/bin/perf
 
 ADD sudoers.d/01_vagrant /etc/sudoers.d/
 
 RUN chmod 0400 /etc/sudoers.d/01_vagrant
 
 RUN mkdir /var/run/sshd
+
+USER vagrant
+
+RUN wget https://sh.rustup.rs -O rustup.sh \
+    && sh rustup.sh --default-toolchain none -y \
+    && rm rustup.sh \
+    && /home/vagrant/.cargo/bin/rustup default nightly \
+    && mv /home/vagrant/.cargo /home/vagrant/cargo
+
+RUN echo "export PATH=${PATH}:/home/vagrant/cargo/bin" >> /home/vagrant/.bashrc
+
+USER root
+
 CMD ["/usr/sbin/sshd", "-D", "-e"]
 EXPOSE 22
