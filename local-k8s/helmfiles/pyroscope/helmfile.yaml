@@ -1,0 +1,21 @@
+repositories:
+  - name: pyroscope
+    url: https://pyroscope-io.github.io/helm-chart
+
+helmDefaults:
+  createNamespace: true
+  waitForJobs: true
+
+releases:
+  - name: pyroscope-server
+    namespace: default
+    chart: pyroscope/pyroscope
+    values:
+      - pyroscope-server.yaml
+
+  - name: pyroscope-ebpf
+    namespace: default
+    chart: pyroscope/pyroscope-ebpf
+    values:
+      - pyroscope-ebpf.yaml
+

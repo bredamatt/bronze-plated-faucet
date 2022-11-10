@@ -1,0 +1,14 @@
+repositories:
+  - name: cilium
+    url: https://helm.cilium.io/
+
+helmDefaults:
+  createNamespace: true
+  waitForJobs: true
+
+releases:
+  - name: cilium
+    namespace: ebpf
+    chart: cilium/cilium
+    values:
+      - ebpf.yaml
