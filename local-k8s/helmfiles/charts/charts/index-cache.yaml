@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  ruster:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-11-10T13:49:27.077789089Z"
+    description: A Helm chart for Kubernetes
+    digest: 5ce7a4c9a933ccbc662682f313afa3279a73acd9e93aab9746eb952fc4f14898
+    name: ruster
+    type: application
+    urls:
+    - charts/ruster-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-11-10T13:49:27Z"
+serverInfo: {}
