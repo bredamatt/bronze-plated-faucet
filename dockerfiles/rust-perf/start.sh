@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Helper script to start the rust-perf container securely
+# Helper script to start the rust-perf container securely, see: https://github.com/moby/moby/blob/master/profiles/seccomp/default.json
 docker run \
     -ti \
     -u dev \
