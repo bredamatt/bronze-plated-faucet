@@ -6,3 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+pyroscope = "0.5.3"
+pyroscope_pprofrs = "0.2.3"
